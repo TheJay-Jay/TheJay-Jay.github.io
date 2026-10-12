@@ -1,15 +1,16 @@
 /* Dark hacker aesthetic styles for TheJay-Jay.github.io
    Author: GitHub Copilot
    Purpose: neon-green terminal/CRT look, monospace typography, animated glitch/scanline effects.
+   Updated: enforce a consistent dark-green background across the whole page
 */
 :root{
-  --bg:#030405;
-  --panel:#071014;
+  --bg:#04120a; /* deep dark green base */
+  --panel:#072217; /* slightly lighter panel */
   --neon:#39ff14;
   --neon-dim:#0fa24a;
   --muted:#7a8a7a;
   --accent:#00ffd7;
-  --glass: rgba(255,255,255,0.03);
+  --glass: rgba(0,20,10,0.06);
   --max-width:1100px;
   --mono: "Fira Code", "JetBrains Mono", "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
 }
@@ -17,7 +18,9 @@
 html,body{height:100%}
 body{
   margin:0;
-  background: radial-gradient(1200px 600px at 10% 10%, rgba(9,20,15,0.45), transparent), linear-gradient(180deg,var(--bg), #010204 60%);
+  /* consistent deep green background across the site */
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(0,30,12,0.35), transparent), linear-gradient(180deg,var(--bg), #021009 60%);
+  background-color:var(--bg);
   color:var(--neon-dim);
   font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   -webkit-font-smoothing:antialiased;
@@ -27,7 +30,7 @@ body{
 /* scanlines overlay */
 .scanlines{pointer-events:none;position:fixed;inset:0;z-index:3;background-image:linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);background-size:100% 3px;mix-blend-mode:overlay;opacity:0.9}
 .container{max-width:var(--max-width);margin:0 auto;padding:2rem}
-.site-header{padding:1rem 0;border-bottom:1px solid rgba(57,255,20,0.04);backdrop-filter:blur(4px);position:relative;z-index:6}
+.site-header{padding:1rem 0;border-bottom:1px solid rgba(57,255,20,0.04);backdrop-filter:blur(4px);position:relative;z-index:6;background:transparent}
 .nav-wrap{display:flex;align-items:center;justify-content:space-between}
 .brand{color:var(--neon);text-decoration:none;font-weight:700;font-family:var(--mono);letter-spacing:0.6px}
 .nav{display:flex;align-items:center;gap:1rem}
@@ -52,24 +55,26 @@ h1{font-family:var(--mono);color:var(--neon);font-size:2.25rem;margin:.25rem 0;p
 .cta-row{margin-top:1rem}
 .button{display:inline-block;padding:.6rem 1rem;border-radius:8px;text-decoration:none;font-weight:600;font-family:var(--mono);margin-right:.5rem}
 .button.primary{background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.12);color:var(--neon)}
-.button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+.button.secondary{background:transparent;border:1px solid rgba(57,255,20,0.04);color:var(--muted)}
 .meta{display:flex;gap:1rem;margin-top:1rem;list-style:none;padding:0}
 .meta li{font-family:var(--mono);color:var(--muted);font-size:0.9rem}
-.hero-card{background:linear-gradient(180deg, rgba(9,18,12,0.6), rgba(6,10,12,0.5));border:1px solid rgba(57,255,20,0.06);padding:1rem;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6);font-family:var(--mono);color:var(--neon-dim)}
+/* hero card stays slightly translucent but matches green tones */
+.hero-card{background:linear-gradient(180deg, rgba(0,18,10,0.45), rgba(0,14,8,0.35));border:1px solid rgba(57,255,20,0.06);padding:1rem;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6);font-family:var(--mono);color:var(--neon-dim)}
 .card-top{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:0.9rem}
 .status-dot{width:10px;height:10px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px rgba(57,255,20,0.5)}
 .card-body{padding:.75rem 0}
 .card-body .label{color:var(--muted);font-size:0.85rem;margin:0}
 .card-body h2{margin:.25rem 0;color:var(--neon);font-size:1.05rem}
-.card-stats{display:flex;gap:1rem;border-top:1px dashed rgba(255,255,255,0.03);padding-top:.75rem;margin-top:.5rem}
+.card-stats{display:flex;gap:1rem;border-top:1px dashed rgba(57,255,20,0.03);padding-top:.75rem;margin-top:.5rem}
 .card-stats div{min-width:0}
 .card-stats strong{display:block;color:var(--neon);font-size:1.05rem}
 .card-stats span{color:var(--muted);font-size:0.8rem}
 .section{padding:3rem 0}
-.section.alt{background:linear-gradient(180deg, transparent, rgba(255,255,255,0.01));border-top:1px solid rgba(255,255,255,0.02)}
+/* keep alt sections visually consistent with the dark-green background */
+.section.alt{background:transparent;border-top:1px solid rgba(57,255,20,0.02)}
 .section-tag{font-family:var(--mono);color:var(--muted);margin:0 0 .5rem}
 .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
-.project-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(57,255,20,0.03);padding:1rem;border-radius:10px;color:var(--muted);font-family:var(--mono)}
+.project-card{background:linear-gradient(180deg, rgba(0,18,10,0.2), rgba(0,14,8,0.12));border:1px solid rgba(57,255,20,0.03);padding:1rem;border-radius:10px;color:var(--muted);font-family:var(--mono)}
 .project-icon{font-size:1.6rem}
 .project-card h3{color:var(--neon);margin:.5rem 0}
 .project-card a{color:var(--accent);text-decoration:none;font-weight:600}
@@ -77,10 +82,10 @@ h1{font-family:var(--mono);color:var(--neon);font-size:2.25rem;margin:.25rem 0;p
 .post-meta{color:var(--muted);font-family:var(--mono);font-size:0.9rem}
 .read-more{color:var(--neon);text-decoration:none;font-family:var(--mono)}
 .resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
-.contact-box{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.03);padding:1.25rem;border-radius:12px}
+.contact-box{background:linear-gradient(180deg, rgba(0,18,10,0.25), rgba(0,14,8,0.12));border:1px solid rgba(57,255,20,0.03);padding:1.25rem;border-radius:12px}
 .contact-links{display:flex;gap:1rem;margin-top:1rem}
 .contact-links a{color:var(--neon);text-decoration:none;font-family:var(--mono)}
-.site-footer{padding:1.5rem 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02)}
+.site-footer{padding:1.5rem 0;text-align:center;color:var(--muted);border-top:1px solid rgba(57,255,20,0.02);background:transparent}
 /* responsive */
 @media(max-width:880px){
   .hero-grid{grid-template-columns:1fr;}
