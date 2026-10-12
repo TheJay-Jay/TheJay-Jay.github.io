@@ -1,11 +1,11 @@
 /* Dark hacker aesthetic styles for TheJay-Jay.github.io
    Author: GitHub Copilot
-   Purpose: neon-green terminal/CRT look, monospace typography, subtle scanlines.
+   Purpose: neon-green terminal/CRT look, monospace typography, animated glitch/scanline effects.
 */
 :root{
-  --bg:#030405; /* near black */
+  --bg:#030405;
   --panel:#071014;
-  --neon:#39ff14; /* bright green */
+  --neon:#39ff14;
   --neon-dim:#0fa24a;
   --muted:#7a8a7a;
   --accent:#00ffd7;
@@ -24,29 +24,30 @@ body{
   -moz-osx-font-smoothing:grayscale;
   line-height:1.5;
 }
-/* subtle scanlines overlay */
-body::before{
-  content:"";
-  pointer-events:none;
-  position:fixed;inset:0;
-  background-image:linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
-  background-size:100% 3px;
-  mix-blend-mode:overlay;
-  opacity:0.6;
-}
+/* scanlines overlay */
+.scanlines{pointer-events:none;position:fixed;inset:0;z-index:3;background-image:linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);background-size:100% 3px;mix-blend-mode:overlay;opacity:0.9}
 .container{max-width:var(--max-width);margin:0 auto;padding:2rem}
-.site-header{padding:1rem 0;border-bottom:1px solid rgba(57,255,20,0.04);backdrop-filter:blur(4px)}
+.site-header{padding:1rem 0;border-bottom:1px solid rgba(57,255,20,0.04);backdrop-filter:blur(4px);position:relative;z-index:6}
 .nav-wrap{display:flex;align-items:center;justify-content:space-between}
 .brand{color:var(--neon);text-decoration:none;font-weight:700;font-family:var(--mono);letter-spacing:0.6px}
+.nav{display:flex;align-items:center;gap:1rem}
 .nav a{color:var(--muted);margin-left:1rem;text-decoration:none;font-family:var(--mono);font-size:0.95rem}
+.menu-toggle{display:none;background:transparent;border:0;color:var(--neon);font-family:var(--mono)}
 .nav a:hover{color:var(--neon);text-decoration:underline;text-decoration-color:rgba(57,255,20,0.12)}
 .hero{padding:4rem 0}
 .hero-grid{display:grid;grid-template-columns:1fr 320px;gap:2rem;align-items:start}
-.hero-copy{padding:1rem 0}
 .eyebrow{color:var(--muted);font-family:var(--mono);margin:0 0 .5rem}
-h1{font-family:var(--mono);color:var(--neon);font-size:2.25rem;margin:.25rem 0}
-h1::after{content:"";display:inline-block;width:10px;height:20px;margin-left:8px;background:transparent;vertical-align:middle;animation:blink 1s steps(2,end) infinite}
-@keyframes blink{50%{background:var(--neon)}}
+h1{font-family:var(--mono);color:var(--neon);font-size:2.25rem;margin:.25rem 0;position:relative}
+.glitch{position:relative}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.8}
+/* color layers for the glitch */
+.glitch::before{color:rgba(57,255,20,0.25);z-index:1;clip-path:polygon(0 0,100% 0,100% 60%,0 60%)}
+.glitch::after{color:rgba(0,255,215,0.16);z-index:2;clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%)}
+/* glitch animation when class applied */
+.glitch.is-glitch::before{animation:glitch-top 350ms steps(2, end)}
+.glitch.is-glitch::after{animation:glitch-bottom 350ms steps(2, end)}
+@keyframes glitch-top{0%{transform:translate(0,0) skewX(0)}25%{transform:translate(-6px,-2px) skewX(-2deg)}50%{transform:translate(6px,1px) skewX(2deg)}75%{transform:translate(-4px,0) skewX(-1deg)}100%{transform:translate(0,0) skewX(0)}}
+@keyframes glitch-bottom{0%{transform:translate(0,0) skewX(0)}25%{transform:translate(6px,2px) skewX(1.5deg)}50%{transform:translate(-6px,-1px) skewX(-2deg)}75%{transform:translate(4px,0) skewX(1deg)}100%{transform:translate(0,0) skewX(0)}}
 .lead{color:rgba(57,255,20,0.9);max-width:55ch}
 .cta-row{margin-top:1rem}
 .button{display:inline-block;padding:.6rem 1rem;border-radius:8px;text-decoration:none;font-weight:600;font-family:var(--mono);margin-right:.5rem}
@@ -54,7 +55,6 @@ h1::after{content:"";display:inline-block;width:10px;height:20px;margin-left:8px
 .button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
 .meta{display:flex;gap:1rem;margin-top:1rem;list-style:none;padding:0}
 .meta li{font-family:var(--mono);color:var(--muted);font-size:0.9rem}
-/* Hero card looks like a terminal window */
 .hero-card{background:linear-gradient(180deg, rgba(9,18,12,0.6), rgba(6,10,12,0.5));border:1px solid rgba(57,255,20,0.06);padding:1rem;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6);font-family:var(--mono);color:var(--neon-dim)}
 .card-top{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:0.9rem}
 .status-dot{width:10px;height:10px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px rgba(57,255,20,0.5)}
@@ -73,23 +73,23 @@ h1::after{content:"";display:inline-block;width:10px;height:20px;margin-left:8px
 .project-icon{font-size:1.6rem}
 .project-card h3{color:var(--neon);margin:.5rem 0}
 .project-card a{color:var(--accent);text-decoration:none;font-weight:600}
-.project-card a:hover{text-decoration:underline}
+.post{border-left:3px solid rgba(57,255,20,0.04);padding:1rem;margin-bottom:1rem}
+.post-meta{color:var(--muted);font-family:var(--mono);font-size:0.9rem}
+.read-more{color:var(--neon);text-decoration:none;font-family:var(--mono)}
+.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
 .contact-box{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.03);padding:1.25rem;border-radius:12px}
 .contact-links{display:flex;gap:1rem;margin-top:1rem}
 .contact-links a{color:var(--neon);text-decoration:none;font-family:var(--mono)}
 .site-footer{padding:1.5rem 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02)}
-/* small screens */
+/* responsive */
 @media(max-width:880px){
   .hero-grid{grid-template-columns:1fr;}
   .hero-card{order:2}
   .nav{display:none}
+  .menu-toggle{display:block}
+  .resume-grid{grid-template-columns:1fr}
 }
-/* accessibility & reduced motion */
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important}
-}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
 /* small CRT flicker */
 @keyframes flicker{0%{filter:brightness(1)}50%{filter:brightness(.94)}100%{filter:brightness(1)}}
-.hero-card{animation:flicker 6s infinite;}
-/* link underline neon on hover */
-a:hover{color:var(--neon)}
+.hero-card{animation:flicker 6s infinite}
